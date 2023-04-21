@@ -12,6 +12,6 @@ export class GetUserUseCase implements IGetUserUseCase {
       throwInvalidParamError('userId does not have valid format');
     }
 
-    return await this._userRepository.getOne({ id: userId });
+    return await this._userRepository.getOne(userId);
   }
 }
