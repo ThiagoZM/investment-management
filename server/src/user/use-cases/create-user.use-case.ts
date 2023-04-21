@@ -6,7 +6,7 @@ import { ICreateUserRepository } from "../protocols/i-create-user-repository";
 import { ICreateUserUseCase } from "../protocols/i-create-user-use-case";
 import { IGetUserRepository } from "../protocols/i-get-user-repository";
 import { UserMapper } from "../user.mapper";
-import { UserAttributes } from "../user.model";
+import { UserAttributes, UserModel } from "../user.model";
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(
@@ -17,8 +17,8 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   async execute(params: UserAttributes): Promise<string> {
     const user = UserMapper.toDomain(params);
 
-    const emailExist = await this._getUserRepository.getOne({
-      email: user.email,
+    const emailExist = await UserModel.findOne({
+      where: { email: user.email }
     });
 
     if (emailExist) {
